@@ -14,19 +14,20 @@ const obtenerDatos = async() => {
 
     data.articles.forEach(element=>{
         const card = document.createElement("div");
-        card.classList.add("col-md-6");
+        card.classList.add("col-12", "col-md-6", "mb-4");
 
-        card.innerHTML = `<div class="card" style="width: 45rem;">
+        card.innerHTML = `<div class="card p-3 mb-2 bg-body-tertiary">
                             <div class="card-body">
-                                <h5 class="card-title">${element.title}</h5>
+                                <h5 class="card-title text-success">${element.title}</h5>
                                 <img src="${element.urlToImage || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYFhNLjRKHgrAPc6QcPbyLKcqHWmrMS6ZOqg&s'}" class="card-img-top" alt="${data.title}">
                                 <p class="card-text">${element.description}</p>
-                                <p class="card-text">Medio: ${element.source.name}</p>
+                                <p class="card-text ">Medio: ${element.source.name}</p>
                                 <p class="card-text">${element.publishedAt}</p>
                                 <a href=${element.url} target="_blank" class="card-link">Ver mas</a>
                             </div>
                         </div>`
         container.appendChild(card);
+
     });
 
 }
@@ -41,16 +42,18 @@ const buscarNoticia = async() =>{
         return;
     }
     
-    let url = `https://newsapi.org/v2/everything?sortBy=popularity&apiKey=94db1efefc9f4cea829aff89fe62b2ca`;
+    let url = "https://newsapi.org/v2/everything?";
     if (q) {
-        url += `&q=${q}`;
+        url += `q=${q}&`;
     }
     if (from) {
-        url += `&from=${from}`;
+        url += `from=${from}&`;
     }
     if (to) {
-        url += `&to=${to}`;
+        url += `to=${to}&`;
     }
+
+    url += "sortBy=popularity&apiKey=94db1efefc9f4cea829aff89fe62b2ca";
 
     const response = await fetch(url);
     const data = await response.json();
@@ -62,14 +65,14 @@ const buscarNoticia = async() =>{
 
     data.articles.forEach(element=>{
         const card = document.createElement("div");
-        card.classList.add("col-md-6");
+        card.classList.add("col-12", "col-md-6", "mb-4");
 
-        card.innerHTML = `<div class="card" style="width: 45rem;">
+        card.innerHTML = `<div class="card p-3 mb-2 bg-body-tertiary">
                             <div class="card-body">
-                                <h5 class="card-title">${element.title}</h5>
+                                <h5 class="card-title text-success">${element.title}</h5>
                                 <img src="${element.urlToImage || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYFhNLjRKHgrAPc6QcPbyLKcqHWmrMS6ZOqg&s'}" class="card-img-top" alt="${data.title}">
                                 <p class="card-text">${element.description}</p>
-                                <p class="card-text">Medio: ${element.source.name}</p>
+                                <p class="card-text ">Medio: ${element.source.name}</p>
                                 <p class="card-text">${element.publishedAt}</p>
                                 <a href=${element.url} target="_blank" class="card-link">Ver mas</a>
                             </div>
@@ -79,12 +82,12 @@ const buscarNoticia = async() =>{
     });
         
     } else{
-        container.innerHTML = "<p>No se encontraron noticias.</p>";
+        container.innerHTML = "<p>No se encontraron resultados</p>";
 
     }
 
 }
 
-//obtenerDatos();
+obtenerDatos();
 
 btnBuscar.addEventListener("click", buscarNoticia);
